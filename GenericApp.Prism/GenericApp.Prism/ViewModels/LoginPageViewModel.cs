@@ -153,27 +153,11 @@ namespace GenericApp.Prism.ViewModels
             }
 
             //Verificar Password
-            if (!(response.Result.Contrasena.ToLower() == Password.ToLower()))
+            if (!(response.Result.USRCONTRASENA.ToLower() == Password.ToLower()))
             {
                 IsRunning = false;
                 IsEnabled = true;
                 await App.Current.MainPage.DisplayAlert("Error", "Usuario o clave incorrecta.", "Aceptar");
-                return;
-            }
-            //Verificar Usuario Habilitado
-            if (response.Result.AutorWOM != 1)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await App.Current.MainPage.DisplayAlert("Error", "Usuario no habilitado.", "Aceptar");
-                return;
-            }
-
-            if (response.Result.Estado != 1)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await App.Current.MainPage.DisplayAlert("Error", "Usuario no habilitado.", "Aceptar");
                 return;
             }
 

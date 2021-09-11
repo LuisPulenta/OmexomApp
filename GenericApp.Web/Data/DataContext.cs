@@ -9,7 +9,7 @@ namespace GenericApp.Web.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<SubContratistasUsrWeb> SubContratistasUsrWebs { get; set; }
         public DbSet<Obra> Obras { get; set; }
         public DbSet<ObrasDocumento> ObrasDocumentos { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }

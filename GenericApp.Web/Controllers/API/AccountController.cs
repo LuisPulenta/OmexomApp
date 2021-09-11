@@ -28,7 +28,7 @@ namespace GenericApp.Web.Controllers.API
                 return BadRequest();
             }
 
-            var user = await _dataContext.Usuarios.FirstOrDefaultAsync(o => o.Login.ToLower() == userRequest.Email.ToLower());
+            var user = await _dataContext.SubContratistasUsrWebs.FirstOrDefaultAsync(o => o.USRLOGIN.ToLower() == userRequest.Email.ToLower());
 
             if (user == null)
             {
@@ -37,13 +37,11 @@ namespace GenericApp.Web.Controllers.API
 
             var response = new UsuarioAppResponse
             {
-                IDUsuario = user.IDUsuario,
-                Login = user.Login,
-                Contrasena = user.Contrasena,
-                Nombre = user.Nombre,
-                Apellido = user.Apellido,
-                AutorWOM = user.AutorWOM,
-                Estado = user.Estado,
+                APELLIDONOMBRE = user.APELLIDONOMBRE,
+                USRCONTRASENA = user.USRCONTRASENA,
+                CODIGO = user.CODIGO,
+                PERFIL = user.PERFIL,
+                USRLOGIN = user.USRLOGIN,
             };
 
             return Ok(response);
@@ -51,23 +49,16 @@ namespace GenericApp.Web.Controllers.API
 
 
         [HttpGet]
-        [Route("GetObras")]
-        public async Task<IActionResult> GetObras()
+        [Route("GetUsuarios")]
+        public async Task<IActionResult> GetUsuarios()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var obras = await _dataContext.Obras
-            .Include(p => p.ObrasDocumentos)
-           .Where(o => (o.Finalizada == 0) 
-           && (o.Modulo == "Rowing") 
-           && (o.GrupoAlmacen!="") 
-           && (o.GrupoCausante != "") 
-           && (o.SUPERVISORE != "Sin Asignar") 
-           && (o.CodigoEstado != "TE"))
-           .OrderBy(o => o.NroObra)
+            var usuarios = await _dataContext.SubContratistasUsrWebs
+           .OrderBy(o => o.APELLIDONOMBRE)
            //.GroupBy(r => new
            //{
            //    r.NroObra,
@@ -86,12 +77,12 @@ namespace GenericApp.Web.Controllers.API
            .ToListAsync();
 
 
-            if (obras == null)
+            if (usuarios == null)
             {
-                return BadRequest("No hay Obras.");
+                return BadRequest("No hay Usuarios.");
             }
 
-            return Ok(obras);
+            return Ok(usuarios);
         }
     }
 }

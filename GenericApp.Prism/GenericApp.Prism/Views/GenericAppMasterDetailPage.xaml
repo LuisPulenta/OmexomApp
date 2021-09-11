@@ -67,7 +67,7 @@
 
         <Label FontAttributes="Bold"
         FontSize="Large"
-        Text="{Binding User.FullName}"/>
+        Text="{Binding User.APELLIDONOMBRE}"/>
 
         <ListView BackgroundColor="Transparent"
                 	      ItemsSource="{Binding Menus}"

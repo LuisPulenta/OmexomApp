@@ -26,21 +26,21 @@
     <BoxView
       HeightRequest="5"
       MinimumHeightRequest="1"
-      BackgroundColor="White">
+      BackgroundColor="#0874cc">
     </BoxView> 
       
     <Label
         Text="BIENVENIDO/A"
         FontAttributes="Bold"
         FontSize="Large"
-        TextColor="White"
+        TextColor="#0874cc"
         HorizontalOptions="CenterAndExpand">
     </Label>
 
     <Label FontAttributes="Bold"
         FontSize="Large"
-        TextColor="White"
-        Text="{Binding User.FullName}"
+        TextColor="#0874cc"
+        Text="{Binding User.APELLIDONOMBRE}"
         HorizontalOptions="CenterAndExpand"/>
     
   </StackLayout>

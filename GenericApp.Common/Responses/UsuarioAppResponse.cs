@@ -2,20 +2,10 @@
 {
     public class UsuarioAppResponse
     {
-        public int IDUsuario { get; set; }
-
-        public string Login { get; set; }
-
-        public string Contrasena { get; set; }
-
-        public string Nombre { get; set; }
-
-        public string Apellido { get; set; }
-
-        public int? AutorWOM { get; set; }
-
-        public byte Estado { get; set; }
-
-        public string FullName => $"{Nombre} {Apellido}";
+        public string CODIGO { get; set; }
+        public string APELLIDONOMBRE { get; set; }
+        public string USRLOGIN { get; set; }
+        public string USRCONTRASENA { get; set; }
+        public int? PERFIL { get; set; }
     }
 }
