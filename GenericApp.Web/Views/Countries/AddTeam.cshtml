@@ -1,0 +1,31 @@
+﻿@model GenericApp.Web.Models.TeamViewModel
+
+@{
+    ViewData["Title"] = "Add Team";
+}
+
+<h2>Agregar nuevo Equipo</h2>
+
+<h4></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        
+        <form asp-action="AddTeam" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CountryId" />
+            <input type="hidden" asp-for="IdCountry" />
+
+            <partial name="_Team" />
+
+            <div class="form-group">
+                <input type="submit" value="Grabar" class="btn btn-primary" />
+                <a asp-action="Details" asp-route-id="@Model.CountryId" class="btn btn-success">Regresar</a>
+            </div>
+        </form>
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

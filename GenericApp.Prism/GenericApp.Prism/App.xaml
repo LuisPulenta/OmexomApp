@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             x:Class="GenericApp.Prism.App">
+  <Application.Resources>
+
+    <!-- Parameters -->
+    <x:String x:Key="UrlAPI">http://keypress.serveftp.net:88/RowingAppApi/</x:String>
+    <x:String x:Key="UrlNoImage">noimage.png</x:String>
+    <x:String x:Key="UrlNoUser">nouser.png</x:String>
+
+    <!-- Colors -->
+    <Color x:Key="ColorBackground">#FFFFFF</Color>
+    <Color x:Key="ColorPrimary">#ffffff</Color>
+        <Color x:Key="ColorSecondary">#04c0db"</Color>
+    <Color x:Key="ColorDanger">#0874CC</Color>
+    <Color x:Key="ColorAccent">#dc2221</Color>
+    <Color x:Key="ColorFont">#0D0D0D</Color>
+    <Color x:Key="ColorFontInverse">#D9D9D9</Color>
+
+    <!-- Styles -->
+    <Style TargetType="Button">
+      <Setter Property="BackgroundColor" Value="{StaticResource ColorDanger}" />
+      <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+      <Setter Property="TextColor" Value="{StaticResource ColorFontInverse}" />
+    </Style>
+
+    <Style TargetType="Label">
+      <Setter Property="TextColor" Value="{StaticResource ColorFont}" />
+    </Style>
+
+    <Style x:Key="SecondaryButton" TargetType="Button">
+      <Setter Property="BackgroundColor" Value="{StaticResource ColorSecondary}" />
+    </Style>
+
+    <Style x:Key="DangerButton" TargetType="Button">
+      <Setter Property="BackgroundColor" Value="{StaticResource ColorDanger}" />
+    </Style>
+
+  </Application.Resources>
+</prism:PrismApplication>

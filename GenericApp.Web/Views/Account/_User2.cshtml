@@ -1,0 +1,33 @@
+﻿@model GenericApp.Web.Models.EditUserViewModel
+
+<div class="form-group">
+    <label asp-for="CountryId" class="control-label"></label>
+    <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+    <span asp-validation-for="CountryId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="DepartmentId" class="control-label"></label>
+    <select asp-for="DepartmentId" asp-items="Model.Departments" class="form-control"></select>
+    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="CityId" class="control-label"></label>
+    <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+    <span asp-validation-for="CityId" class="text-danger"></span>
+</div>
+<h4>
+    EQUIPO
+</h4>
+<div class="form-group">
+    <label asp-for="CountryTeamId" class="control-label"></label>
+    <select asp-for="CountryTeamId" asp-items="Model.Countries" class="form-control"></select>
+    <span asp-validation-for="CountryTeamId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="TeamId" class="control-label"></label>
+    <select asp-for="TeamId" asp-items="Model.Teams" class="form-control"></select>
+    <span asp-validation-for="TeamId" class="text-danger"></span>
+</div>

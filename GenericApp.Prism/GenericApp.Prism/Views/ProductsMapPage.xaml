@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GenericApp.Prism.Views.ProductsMapPage"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:maps="clr-namespace:GenericApp.Prism;assembly=GenericApp.Prism"
+
+             BackgroundColor="Blue"
+             Title="{Binding Title}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="ic_action_streetview"
+                 Clicked="MapStreetCommand" />
+    <ToolbarItem Icon="ic_action_satellite"
+                 Clicked="MapSateliteCommand" />
+    <ToolbarItem Icon="ic_action_looks_two"
+                 Clicked="MapHybridCommand" />
+  </ContentPage.ToolbarItems>
+
+
+  <ContentPage.Content>
+
+    <StackLayout>
+      <maps:CustomMap
+                x:Name="MyMap"
+                MapType="Street" 
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+      </maps:CustomMap>
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

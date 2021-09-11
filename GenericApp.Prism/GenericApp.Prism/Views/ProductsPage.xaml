@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+           	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             x:Class="GenericApp.Prism.Views.ProductsPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="ic_add_circle_outline"
+                 Command="{Binding AddProductCommand}" />
+    <ToolbarItem Icon="ic_map"
+                 Command="{Binding ProductsMapCommand}" />
+  </ContentPage.ToolbarItems>
+
+  <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     Padding="5">
+      <SearchBar Placeholder="Buscar Producto..."
+                       SearchCommand="{Binding SearchCommand}"
+                       BackgroundColor="White"
+                       Text="{Binding Search}"/>
+      <CollectionView ItemsSource="{Binding Products}">
+        <CollectionView.ItemsLayout>
+          <LinearItemsLayout Orientation="Vertical"
+                           ItemSpacing="5" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+          
+          <DataTemplate>
+            <Frame CornerRadius="10"
+                     HasShadow="True"
+                     BackgroundColor="White"
+                     Margin="5"
+                     Padding="5"
+                     >
+              <Grid>
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ViewProductCommand}"/>
+              </Grid.GestureRecognizers>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <ffimageloading:CachedImage Grid.Column="0"
+                                                        Aspect="AspectFill"
+                                                        Source="{Binding ImageFullPath}" 
+                                                        CacheDuration= "50"
+                                                        Margin="5"
+                                                        RetryCount= "3"
+                                                        RetryDelay= "600"
+                                                        WidthRequest="100"/>
+              <StackLayout Grid.Column="1"
+                                         VerticalOptions="Center">
+                <Label Text="{Binding Name}" 
+                                       FontAttributes="Bold"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation" />
+                
+                <Label Text="{Binding Price, StringFormat='{0:C2}'}"
+                                       LineBreakMode="TailTruncation"
+                                       FontAttributes="Italic" 
+                                       VerticalOptions="End" />
+                <StackLayout Orientation="Horizontal">
+                  <Label
+                    Text="Lat:"
+                      FontAttributes="Italic"
+                    FontSize="Micro">
+                  </Label>
+                  <Label Text="{Binding Latitude}"
+                                      FontAttributes="Italic" 
+                                      FontSize="Micro"                         
+                                      VerticalOptions="End" />
+                  <Label
+                    Text="Long:"
+                      FontAttributes="Italic"
+                    FontSize="Micro">
+                  </Label>
+                  <Label Text="{Binding Longitude}"
+                                      FontAttributes="Italic" 
+                         FontSize="Micro"
+                                      VerticalOptions="End" />
+                </StackLayout>
+                <Label Text="{Binding State.Name}"
+                                      FontAttributes="Italic" 
+                                      VerticalOptions="End" />
+              </StackLayout>
+
+                <StackLayout Grid.Column="2">
+                  <ImageButton 
+                    BackgroundColor="Transparent"
+                    VerticalOptions="CenterAndExpand"                     
+                    Command="{Binding EditProductCommand}" 
+                    Source="ic_action_edit.png"/>
+                  <ImageButton 
+                    BackgroundColor="Transparent"
+                    VerticalOptions="CenterAndExpand"                     
+                    Command="{Binding DeleteProductCommand}" 
+                    Source="ic_action_delete_forever.png"/>
+                </StackLayout>
+
+              </Grid>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Transparent"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="Blue"
+                	                   IsBusy="{Binding IsRunning}"
+                	                   Title="Cargando..."
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
+  </AbsoluteLayout>
+</ContentPage>

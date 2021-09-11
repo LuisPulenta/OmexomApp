@@ -1,0 +1,121 @@
+﻿@model GenericApp.Web.Models.EditUserViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>
+    <img src="@Model.PictureFullPath" style="width:70px;height:70px;border-radius:50%" />
+    Editar Usuario
+</h2>
+
+<h4></h4>
+<hr />
+
+<div class="row">
+
+    <form asp-action="ChangeUser" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PicturePath" />
+        <div class="form-group">
+
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h4>
+                    DATOS PERSONALES
+                </h4>
+                <partial name="_User" />
+            </div>
+
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h4>
+                    CIUDAD
+                </h4>
+                <partial name="_User2" />
+            </div>
+    </form>
+    <div class="form-group">
+        <input type="submit" value="Grabar" class="btn btn-primary" />
+        <a asp-action="ChangePasswordMVC" class="btn btn-warning">Cambiar Password</a>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CountryId").change(function () {
+                $("#DepartmentId").empty();
+                $("#DepartmentId").append('<option value="0">[Seleccione una provincia...]</option>');
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Seleccione una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetDepartments")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryId").val() },
+                    success: function (subcategories) {
+                        $.each(subcategories, function (i, department) {
+                            //debugger;
+                            $("#DepartmentId").append('<option value="'
+                                + department.id + '">'
+                                + department.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar las provincias.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#CountryTeamId").change(function () {
+                $("#TeamId").empty();
+                $("#TeamId").append('<option value="0">[Seleccione un equipo...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetTeams")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryTeamId").val() },
+                    success: function (subcategories) {
+                        $.each(subcategories, function (i, department) {
+                            //debugger;
+                            $("#TeamId").append('<option value="'
+                                + department.id + '">'
+                                + department.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar los equipos.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#DepartmentId").change(function () {
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Seleccione una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCities")',
+                    dataType: 'json',
+                    data: { departmentId: $("#DepartmentId").val() },
+                    success: function (cities) {
+                        $.each(cities, function (i, city) {
+                            //debugger;
+                            $("#CityId").append('<option value="'
+                                + city.id + '">'
+                                + city.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar las ciudades.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

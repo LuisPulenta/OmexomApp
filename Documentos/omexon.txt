@@ -1,0 +1,28 @@
+***-*-*-*-*-
+*********APP
+Sistema GSL
+
+TEcnicos
+	Asignan OT a trabajar.-
+	1 supervisor planifica trabajo. para OT
+tecnico
+	al inicar el trabajo de 1 OT
+	foto inicio, y tomar geoposicion
+	1 foto intermedia a la mitad del trabajo, y tomar geoposicion
+	1 foto final de ot0 y tomar geoposicion
+
+Boton Inicio trabajo OK
+Grabar Fecha y Hs.
+Boton Finalizar Trabajo
+marca cierre de trabajo.
+Grabar Fecha y Hs
+
+**charla pretarea. 5 minutos. de la charla, se graba.
+graba de charla. x OT.
+
+**funcionar offline.-
+
+
+
+
+

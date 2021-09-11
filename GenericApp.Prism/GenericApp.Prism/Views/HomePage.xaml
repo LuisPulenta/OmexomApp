@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="GenericApp.Prism.Views.HomePage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+  
+    <ContentPage.Padding>
+      <OnPlatform x:TypeArguments="Thickness">
+        <On Platform="Android, UWP">0</On>
+        <On Platform="iOS">0,20,0,0</On>
+      </OnPlatform>
+    </ContentPage.Padding>
+
+    <StackLayout Padding="10">
+    <Image x:Name="Logo" HorizontalOptions="Center"
+                           RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,Property=X,Factor=1,Constant=60}"
+                           HeightRequest="150"
+                           Source="logo"/>
+    <BoxView
+      HeightRequest="5"
+      MinimumHeightRequest="1"
+      BackgroundColor="White">
+    </BoxView> 
+      
+    <Label
+        Text="BIENVENIDO/A"
+        FontAttributes="Bold"
+        FontSize="Large"
+        TextColor="White"
+        HorizontalOptions="CenterAndExpand">
+    </Label>
+
+    <Label FontAttributes="Bold"
+        FontSize="Large"
+        TextColor="White"
+        Text="{Binding User.FullName}"
+        HorizontalOptions="CenterAndExpand"/>
+    
+  </StackLayout>
+</ContentPage>

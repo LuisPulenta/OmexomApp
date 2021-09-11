@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             x:Class="GenericApp.Prism.Views.ModifyUserPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+
+  <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     Padding="5">
+      <ScrollView>
+        <StackLayout Spacing="0">
+          <ffimageloading:CachedImage Aspect="AspectFit"
+                                                Source="{Binding Image}" 
+                                                CacheDuration= "50"
+                                                HeightRequest="150"
+                                                Margin="5"
+                                                RetryCount= "3"
+                                                RetryDelay= "600">
+            <ffimageloading:CachedImage.Transformations>
+              <fftransformations:CircleTransformation />
+            </ffimageloading:CachedImage.Transformations>
+            <ffimageloading:CachedImage.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+            </ffimageloading:CachedImage.GestureRecognizers>
+          </ffimageloading:CachedImage>
+          <Label Text="Datos personales:"
+                 FontAttributes="Bold">
+          </Label>
+          <inputLayout:SfTextInputLayout Hint="Documento" 
+                                                   ContainerType="Outlined">
+            <Entry Placeholder="Ingrese Documento..." 
+                               Text="{Binding User.Document}" />
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Nombre" 
+                                                   ContainerType="Outlined">
+            <Entry Placeholder="Ingrese Nombre..." 
+                               Text="{Binding User.FirstName}" />
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Apellido" 
+                                                   ContainerType="Outlined">
+            <Entry Placeholder="Ingrese Apellido..." 
+                               Text="{Binding User.LastName}" />
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="País" 
+                                                   ContainerType="Outlined">
+            <Picker ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Countries}"
+                                SelectedItem="{Binding Country}"
+                                Title="Seleccione País..."/>
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Provincia" 
+                                                   ContainerType="Outlined">
+            <Picker ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Departments}"
+                                SelectedItem="{Binding Department}"
+                                Title="Seleccione Provincia...}"/>
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Ciudad" 
+                                                   ContainerType="Outlined">
+            <Picker ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Cities}"
+                                SelectedItem="{Binding City}"
+                                Title="Seleccione Ciudad..."/>
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Dirección" 
+                                                   ContainerType="Outlined">
+            <Entry Placeholder="Ingrese Dirección..." 
+                               Text="{Binding User.Address}" />
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Teléfono" 
+                                                   ContainerType="Outlined">
+            <Entry Placeholder="Ingrese Teléfono..." 
+                               Keyboard="Telephone"
+                               Text="{Binding User.PhoneNumber}" />
+          </inputLayout:SfTextInputLayout>
+          <Label Text="Equipo Favorito:"
+                 FontAttributes="Bold">
+          </Label>
+          <inputLayout:SfTextInputLayout Hint="País" 
+                                                   ContainerType="Outlined">
+            <Picker ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Countries2}"
+                                SelectedItem="{Binding Country2}"
+                                Title="Seleccione País..."/>
+          </inputLayout:SfTextInputLayout>
+
+          <inputLayout:SfTextInputLayout Hint="Equipo" 
+                                                   ContainerType="Outlined">
+            <Picker ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Teams2}"
+                                SelectedItem="{Binding Team2}"
+                                Title="Seleccione Equipo...}"/>
+          </inputLayout:SfTextInputLayout>
+
+        </StackLayout>
+      </ScrollView>
+      <StackLayout Orientation="Horizontal"
+                         VerticalOptions="EndAndExpand">
+        <Button Command="{Binding SaveCommand}"
+                        IsEnabled="{Binding IsEnabled}"
+                        Text="Grabar"/>
+        <Button Command="{Binding ChangePasswordCommand}"
+                        IsEnabled="{Binding IsEnabled}"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="Cambiar Password"/>
+      </StackLayout>
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Transparent"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="Blue"
+                	                   IsBusy="{Binding IsRunning}"
+                	                   Title="Grabar..."
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
+  </AbsoluteLayout>
+
+</ContentPage>

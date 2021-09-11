@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+         	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             x:Class="GenericApp.Prism.Views.LoginPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     Padding="5">
+            <ScrollView>
+                <StackLayout>
+                    <Image HeightRequest="150"
+                           Margin="20"
+                           Source="logo"/>
+
+                    <StackLayout VerticalOptions="CenterAndExpand">
+                        <inputLayout:SfTextInputLayout Hint="Usuario:" 
+                                                       ContainerType="Outlined"
+                                                       BackgroundColor="{StaticResource ColorBackground}"
+                                                       ContainerBackgroundColor="Transparent"
+                                                       FocusedColor="#04c0db
+"
+                                                       UnfocusedColor="#0874cc">
+                            <Entry Placeholder="Ingrese Usuario..."
+                                   Keyboard="Email"
+                                   Text="{Binding Email}" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout Hint="Clave:" 
+                                                       EnablePasswordVisibilityToggle="true"
+                                                       ContainerType="Outlined"
+                                                       BackgroundColor="{StaticResource ColorBackground}"
+                                                       ContainerBackgroundColor="Transparent"
+                                                       FocusedColor="#04c0db
+"
+                                                       UnfocusedColor="#0874cc">
+                            <Entry Placeholder="Ingrese Clave..." 
+                                   IsPassword="True"
+                                   Text="{Binding Password}" />
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+
+
+
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button Command="{Binding LoginCommand}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Style="{StaticResource DangerButton}"
+                        Text="Iniciar sesion"/>
+
+            </StackLayout>
+        </StackLayout>
+        <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Transparent"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="#0874CC"
+                	                   IsBusy="{Binding IsRunning}"
+                	                   Title="Cargando..."
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
+    </AbsoluteLayout>
+</ContentPage>

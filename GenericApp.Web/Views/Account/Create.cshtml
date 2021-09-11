@@ -1,0 +1,147 @@
+﻿@model GenericApp.Web.Models.AddUserViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Agregar Administrador</h2>
+
+<hr />
+<div class="row">
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+
+            <div class="col-md-4">
+                <h4>
+                    USUARIO Y PASSWORD
+                </h4>
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+
+
+
+                <hr>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                </hr>
+
+                <hr>
+                <div class="form-group">
+                    <label asp-for="PasswordConfirm" class="control-label"></label>
+                    <input asp-for="PasswordConfirm" class="form-control" />
+                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                </div>
+                </hr>
+
+            </div>
+
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h4>
+                    DATOS PERSONALES
+                </h4>
+                <partial name="_User" />
+            </div>
+
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h4>
+                    CIUDAD
+                </h4>
+                <partial name="_User2" />
+            </div>
+    </form>
+    <div class="form-group">
+        <input type="submit" value="Registrar" class="btn btn-primary" />
+    </div>
+</div>
+
+<div class="text-success">
+    <p>
+        @ViewBag.Message
+    </p>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CountryId").change(function () {
+                $("#DepartmentId").empty();
+                $("#DepartmentId").append('<option value="0">[Seleccione una provincia...]</option>');
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Seleccione una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetDepartments")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryId").val() },
+                    success: function (subcategories) {
+                        $.each(subcategories, function (i, department) {
+                            //debugger;
+                            $("#DepartmentId").append('<option value="'
+                                + department.id + '">'
+                                + department.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar las provincias.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#CountryTeamId").change(function () {
+                $("#TeamId").empty();
+                $("#TeamId").append('<option value="0">[Seleccione un Equipo...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetTeams")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryTeamId").val() },
+                    success: function (subcategories) {
+                        $.each(subcategories, function (i, team) {
+                            //debugger;
+                            $("#TeamId").append('<option value="'
+                                + team.id + '">'
+                                + team.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar los Equipos.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#DepartmentId").change(function () {
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Seleccione una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCities")',
+                    dataType: 'json',
+                    data: { departmentId: $("#DepartmentId").val() },
+                    success: function (cities) {
+                        $.each(cities, function (i, city) {
+                            //debugger;
+                            $("#CityId").append('<option value="'
+                                + city.id + '">'
+                                + city.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error al buscar las ciudades.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

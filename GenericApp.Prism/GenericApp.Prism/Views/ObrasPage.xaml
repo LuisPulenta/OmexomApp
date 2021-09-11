@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+           	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             x:Class="GenericApp.Prism.Views.ObrasPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+    <StackLayout Padding="5">
+        <SearchBar Placeholder="Buscar..."
+                 BackgroundColor="White"
+                 FontSize="Small"
+                 WidthRequest="200"
+                 Text="{Binding Filter}"
+                 TextChanged="SearchBar_TextChanged"
+                 HeightRequest="45">
+            <!--  TextChanged="SearchBar_TextChanged" -->
+        </SearchBar>
+        <StackLayout Orientation="Horizontal"
+                   BackgroundColor="White"
+                   Padding="2"
+                   >
+            <Label Text="Cantidad de Obras:"
+               FontSize="Small"
+               TextColor="Blue"
+               FontAttributes="Bold"></Label>
+            <Label Text="{Binding CantObras}"
+               TextColor="Red"
+               FontSize="Small"
+               FontAttributes="Bold"></Label>
+        </StackLayout>
+        <ListView ItemsSource="{Binding Obras}"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                SeparatorVisibility="None">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="10"
+                               HeightRequest="65"
+                     HasShadow="True"
+                     BackgroundColor="White"
+                     Margin="3"
+                     Padding="5"
+                     >
+                            <StackLayout 
+                  >
+                                <Grid HeightRequest="60"
+                        RowSpacing="-0">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectObraCommand}" />
+                                    </Grid.GestureRecognizers>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="48" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+
+                                    <Label Grid.Row="0"
+                                        Grid.Column="0"
+                                        FontSize="Micro"
+                                        FontAttributes="Bold"
+                                        TextColor="Blue"
+                                        Text="N° Obra:"></Label>
+                                    
+                                    <Label Grid.Row="0"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="3"
+                                        FontSize="Micro"
+                                        FontAttributes="None"
+                                        TextColor="Black"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding NroObra}"></Label>
+                                    
+                                    <Label Grid.Row="1"
+                                        Grid.Column="0"
+                                        FontSize="Micro"
+                                        FontAttributes="Bold"
+                                        TextColor="Blue"
+                                        Text="Nombre:"></Label>
+                                    
+                                    <Label Grid.Row="1"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="3"
+                                        FontSize="Micro"
+                                        FontAttributes="None"
+                                        TextColor="Black"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding NombreObra}"></Label>
+                                    
+                                    <Label Grid.Row="2"
+                                        Grid.Column="0"
+                                        FontSize="Micro"
+                                        FontAttributes="Bold"
+                                        TextColor="Blue"
+                                        Text="ELEMPEP:"></Label>
+                                    
+                                    <Label Grid.Row="2"
+                                        Grid.Column="1"
+                                        FontSize="Micro"
+                                        FontAttributes="None"
+                                        TextColor="Black"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding ELEMPEP}"></Label>
+
+                                    <Label Grid.Row="2"
+                                        Grid.Column="2"
+                                        FontSize="Micro"
+                                        FontAttributes="Bold"
+                                        TextColor="Blue"
+                                        Text="Fotos:"></Label>
+
+                                    <Label Grid.Row="2"
+                                        Grid.Column="3"
+                                        FontSize="Micro"
+                                        FontAttributes="None"
+                                        TextColor="Black"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding ObrasDocumentos.Count}"></Label>
+
+                                    <Image Grid.Row="0"
+                                        Grid.Column="5"
+                                        Grid.RowSpan="3"
+                                        VerticalOptions="Center"
+                                        Source="ic_chevron_right">
+                                    </Image>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+
+</ContentPage>

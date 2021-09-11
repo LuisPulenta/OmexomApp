@@ -1,0 +1,58 @@
+﻿@model GenericApp.Web.Models.ProductViewModel
+
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Description" class="control-label"></label>
+    <textarea asp-for="Description" class="form-control"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="CategoryId" class="control-label"></label>
+    <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+    <span asp-validation-for="CategoryId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="PriceString" class="control-label"></label>
+    <input asp-for="PriceString" class="form-control" />
+    <span asp-validation-for="PriceString" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="ImageFile" class="control-label"></label>
+    <input asp-for="ImageFile" type="file" class="form-control" />
+    <span asp-validation-for="ImageFile" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Latitude" class="control-label"></label>
+    <textarea asp-for="Latitude" class="form-control"></textarea>
+    <span asp-validation-for="Latitude" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Longitude" class="control-label"></label>
+    <textarea asp-for="Longitude" class="form-control"></textarea>
+    <span asp-validation-for="Longitude" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="StateId" class="control-label"></label>
+    <select asp-for="StateId" asp-items="Model.States" class="form-control"></select>
+    <span asp-validation-for="StateId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+        </label>
+    </div>
+</div>
