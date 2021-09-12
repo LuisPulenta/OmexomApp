@@ -4,7 +4,7 @@ namespace GenericApp.Common.Responses
 {
     public class UsuarioAppResponse
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public int ID { get; set; }
         public string CODIGO { get; set; }
         public string APELLIDONOMBRE { get; set; }

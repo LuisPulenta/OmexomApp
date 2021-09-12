@@ -169,7 +169,7 @@ namespace GenericApp.Prism.ViewModels
             Settings.IsLogin = true;
             //*******************************************************************************
 
-
+            Users = await App.Database.GetItemsAsync();
             int MyID = 0;
             foreach (UsuarioAppResponse user in Users)
             {
