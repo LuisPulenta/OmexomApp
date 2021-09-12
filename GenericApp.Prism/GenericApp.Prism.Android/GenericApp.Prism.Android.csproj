@@ -74,6 +74,9 @@
     <PackageReference Include="Plugin.CurrentActivity">
       <Version>2.1.0.4</Version>
     </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.3.3</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
       <Version>17.3.0.9-beta</Version>
     </PackageReference>
@@ -109,6 +112,7 @@
     <Compile Include="CustomMapRenderer.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Services\FileHelper.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <LinkDescription Include="LinkerSettings.xml" />
@@ -138,6 +142,10 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GenericApp.Common\GenericApp.Common.csproj">
+      <Project>{3c949fcb-50e2-4153-bcdb-c039e3f296e5}</Project>
+      <Name>GenericApp.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GenericApp.Prism\GenericApp.Prism.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>GenericApp.Prism</Name>

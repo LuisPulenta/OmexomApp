@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using GenericApp.Common.Requests;
+﻿using GenericApp.Common.Data;
+using GenericApp.Common.Helpers;
 using GenericApp.Common.Responses;
 using GenericApp.Common.Services;
-using GenericApp.Prism.Views;
+using GenericApp.Prism.Models;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
-using Xamarin.Essentials;
-using GenericApp.Common.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Xamarin.Essentials;
 
 namespace GenericApp.Prism.ViewModels
 {
@@ -18,29 +19,12 @@ namespace GenericApp.Prism.ViewModels
         private bool _isEnabled;
         private string _password;
         private DelegateCommand _loginCommand;
-        private DelegateCommand _registerCommand;
-        private DelegateCommand _forgotPasswordCommand;
         private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
 
         private string _pageReturn;
 
-        public LoginPageViewModel(INavigationService navigationService, IApiService apiService) : base(navigationService)
-        {
-            _navigationService = navigationService;
-            _apiService = apiService;
-            Title = "Login";
-            IsEnabled = true;
-            LoadUsers();
-            //Email = "AVASILE";
-            //Password = "AVA123";
-        }
-
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(LoginAsync));
-
-        public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand = new DelegateCommand(RegisterAsync));
-
-        public DelegateCommand ForgotPasswordCommand => _forgotPasswordCommand ?? (_forgotPasswordCommand = new DelegateCommand(ForgotPasswordAsync));
 
         public bool IsRunning
         {
@@ -62,8 +46,26 @@ namespace GenericApp.Prism.ViewModels
             set => SetProperty(ref _password, value);
         }
 
-        public List<UsuarioAppResponse> MyUsers { get; set; }
+        
 
+        
+        
+
+        public LoginPageViewModel(INavigationService navigationService, IApiService apiService) : base(navigationService)
+        {
+            _navigationService = navigationService;
+            _apiService = apiService;
+            Title = "Login";
+            IsEnabled = true;
+            LoadUsers();
+            UsuarioAppResponseRepository repository = new UsuarioAppResponseRepository();
+            var Users = repository.GetAll();
+            //Email = "AVASILE";
+            //Password = "AVA123";
+        }
+
+        public List<UsuarioAppResponse> Users { get; set; }
+        public List<UsuarioAppResponse> MyUsers { get; set; }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -76,13 +78,40 @@ namespace GenericApp.Prism.ViewModels
 
         public async void LoadUsers()
         {
+            //Chequea si la Tabla Users Local tiene datos y si hay Internet
+            Users = await App.Database.GetItemsAsync();
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet && Users.Count==0)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "No hay Internet y no hay Tabla Usuarios Local para chequear el Login",
+                    "Aceptar");
+                return;
+            }
+
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet && Users.Count > 0)
+            {
+                return;
+            }
+
+            //Si hay Internet borra la Tabla Users Local y la llena de nuevo desde el Servidor
+            //Borra la Tabla Users Local
+            if (Users.Count > 0)
+            {
+                foreach (UsuarioAppResponse user in Users)
+                {
+                    await App.Database.DeleteItemAsync(user);
+                }
+            }
+
+            //Trae la Tabla Usuarios desde el Servidor
             var controller = string.Format("/Account/GetUsuarios");
             var url = App.Current.Resources["UrlAPI"].ToString();
             var response = await _apiService.GetUsuarios(
                 url,
                 "api",
                 controller);
-                if (!response.IsSuccess)
+            if (!response.IsSuccess)
             {
                 IsRunning = false;
                 IsEnabled = true;
@@ -90,10 +119,11 @@ namespace GenericApp.Prism.ViewModels
                 return;
             }
             MyUsers = (List<UsuarioAppResponse>)response.Result;
-
-            var a = 1; 
-
-           
+            //Llena la Tabla Users Local
+            foreach (UsuarioAppResponse user in MyUsers)
+            {
+                await App.Database.SaveItemAsync(user);
+            }
         }
 
         private async void LoginAsync()
@@ -119,22 +149,7 @@ namespace GenericApp.Prism.ViewModels
             IsRunning = true;
             IsEnabled = false;
 
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await App.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Error de conexión",
-                    "Aceptar");
-                return;
-            }
-
-            string url = App.Current.Resources["UrlAPI"].ToString();
-
             //*******************************************************************************
-
-
             TokenResponse token = new TokenResponse();
             token.Token = "123";
             token.Expiration = DateTime.Now;
@@ -150,24 +165,24 @@ namespace GenericApp.Prism.ViewModels
             token.User.PhoneNumber = "123";
             token.User.PicturePath = null;
             token.User.UserType = Common.Enums.UserType.Admin;
-
-
-
-
-
             Settings.Token = JsonConvert.SerializeObject(token);
             Settings.IsLogin = true;
-
-
-
             //*******************************************************************************
 
 
+            int MyID = 0;
+            foreach (UsuarioAppResponse user in Users)
+            {
+                if (user.USRLOGIN.ToLower()==Email.ToLower())
+                {
+                    MyID = user.ID;
+                    break;
+                }
+            }
 
+            var response = await App.Database.GetItemAsync(MyID);
 
-            var response = await _apiService.GetUserByEmailAsync(url, "api", "/Account/GetUserByEmail", Email, Password);
-
-            if (!response.IsSuccess)
+            if (response == null)
             {
                 IsEnabled = true;
                 IsRunning = false;
@@ -177,7 +192,7 @@ namespace GenericApp.Prism.ViewModels
             }
 
             //Verificar Password
-            if (!(response.Result.USRCONTRASENA.ToLower() == Password.ToLower()))
+            if (!(response.USRCONTRASENA.ToLower() == Password.ToLower()))
             {
                 IsRunning = false;
                 IsEnabled = true;
@@ -185,34 +200,10 @@ namespace GenericApp.Prism.ViewModels
                 return;
             }
 
-            Settings.UsuarioLogueado = JsonConvert.SerializeObject(response.Result);
+            Settings.UsuarioLogueado = JsonConvert.SerializeObject(response);
 
             await _navigationService.NavigateAsync("/GenericAppMasterDetailPage/NavigationPage/HomePage");
 
-
-            //await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
-
-            //if (string.IsNullOrEmpty(_pageReturn))
-            //{
-            //    await _navigationService.NavigateAsync($"/{nameof(GenericAppMasterDetailPage)}/NavigationPage/{nameof(HomePage)}");
-            //}
-            //else
-            //{
-            //    await _navigationService.NavigateAsync($"/{nameof(GenericAppMasterDetailPage)}/NavigationPage/{_pageReturn}");
-            //}
-            //Password = string.Empty;
-        }
-
-        private async void ForgotPasswordAsync()
-        {
-            var parameters = new NavigationParameters();
-            parameters.Add("email", Email);
-            await _navigationService.NavigateAsync(nameof(RecoverPasswordPage), parameters);
-        }
-
-        private async void RegisterAsync()
-        {
-            await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
     }
 }

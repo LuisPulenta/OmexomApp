@@ -188,6 +188,7 @@ namespace GenericApp.Web.Helpers
         {
             return new UsuarioAppResponse
             {
+                ID= subContratistasUsrWeb.ID,
                 APELLIDONOMBRE = subContratistasUsrWeb.APELLIDONOMBRE,
                 CODIGO = subContratistasUsrWeb.CODIGO,
                 USRCONTRASENA = subContratistasUsrWeb.USRCONTRASENA,

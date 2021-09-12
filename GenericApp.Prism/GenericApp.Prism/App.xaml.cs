@@ -8,11 +8,27 @@ using GenericApp.Prism.Views;
 using GenericApp.Prism.ViewModels;
 using GenericApp.Prism.Helpers;
 using GenericApp.Common.Helpers;
+using GenericApp.Common.Data;
+using GenericApp.Prism.Services;
 
 namespace GenericApp.Prism
 {
     public partial class App
     {
+        private static UsersDatabase database;
+
+        public static UsersDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new UsersDatabase(DependencyService.Get<IFileHelper>().GetLocalFilePath("usersdb.db3"));
+                }
+                return database;
+            }
+        }
+
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {

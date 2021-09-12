@@ -5,6 +5,7 @@ namespace GenericApp.Web.Data.Entities
     public class SubContratistasUsrWeb
     {
         [Key]
+        public int ID { get; set; }
         public string CODIGO { get; set; }
         public string APELLIDONOMBRE { get; set; }
         public string USRLOGIN { get; set; }

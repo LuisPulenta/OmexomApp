@@ -1,7 +1,11 @@
-﻿namespace GenericApp.Common.Responses
+﻿using SQLite;
+
+namespace GenericApp.Common.Responses
 {
     public class UsuarioAppResponse
     {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
         public string CODIGO { get; set; }
         public string APELLIDONOMBRE { get; set; }
         public string USRLOGIN { get; set; }
