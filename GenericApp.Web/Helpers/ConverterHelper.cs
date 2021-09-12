@@ -183,5 +183,27 @@ namespace GenericApp.Web.Helpers
             }
             return list;
         }
+
+        public UsuarioAppResponse ToUsuarioAppResponse(SubContratistasUsrWeb subContratistasUsrWeb)
+        {
+            return new UsuarioAppResponse
+            {
+                APELLIDONOMBRE = subContratistasUsrWeb.APELLIDONOMBRE,
+                CODIGO = subContratistasUsrWeb.CODIGO,
+                USRCONTRASENA = subContratistasUsrWeb.USRCONTRASENA,
+                PERFIL = subContratistasUsrWeb.PERFIL,
+                USRLOGIN = subContratistasUsrWeb.USRLOGIN
+            };
+        }
+
+        public List<UsuarioAppResponse> ToUsuarioAppResponse(List<SubContratistasUsrWeb> subContratistasUsrWebs)
+        {
+            List<UsuarioAppResponse> list = new List<UsuarioAppResponse>();
+            foreach (SubContratistasUsrWeb subContratistasUsrWeb in subContratistasUsrWebs)
+            {
+                list.Add(ToUsuarioAppResponse(subContratistasUsrWeb));
+            }
+            return list;
+        }
     }
 }

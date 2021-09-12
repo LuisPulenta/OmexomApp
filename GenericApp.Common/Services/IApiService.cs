@@ -14,6 +14,11 @@ namespace GenericApp.Common.Services
            string email,
            string password);
 
+        Task<ResponseT<object>> GetUsuarios(
+          string urlBase,
+          string servicePrefix,
+          string controller);
+
         Task<ResponseT<object>> GetObras(
           string urlBase,
           string servicePrefix,

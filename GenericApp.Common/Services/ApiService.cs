@@ -589,6 +589,47 @@ namespace GenericApp.Common.Services
             }
         }
 
+        public async Task<ResponseT<object>> GetUsuarios(
+            string urlBase,
+            string servicePrefix,
+            string controller)
+        {
+            try
+            {
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri(urlBase)
+                };
+
+                var url = $"{servicePrefix}{controller}";
+                var response = await client.GetAsync(url);
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new ResponseT<object>
+                    {
+                        IsSuccess = false,
+                        Message = answer,
+                    };
+                }
+
+                var obras = JsonConvert.DeserializeObject<List<UsuarioAppResponse>>(answer);
+                return new ResponseT<object>
+                {
+                    IsSuccess = true,
+                    Result = obras
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseT<object>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
         public async Task<ResponseT<object>> GetObras(
             string urlBase,
             string servicePrefix,
@@ -629,5 +670,6 @@ namespace GenericApp.Common.Services
                 };
             }
         }
+
     }
 }

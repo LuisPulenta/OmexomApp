@@ -107,7 +107,7 @@ namespace GenericApp.Prism.ViewModels
                 return;
             }
             MyObras = (List<ObraResponse>)response.Result;
-            var aa = 1;
+            
             RefreshList();
             IsRefreshing = false;
 

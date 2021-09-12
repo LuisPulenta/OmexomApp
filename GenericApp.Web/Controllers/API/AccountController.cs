@@ -1,6 +1,7 @@
 ﻿using GenericApp.Common.Requests;
 using GenericApp.Common.Responses;
 using GenericApp.Web.Data;
+using GenericApp.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace GenericApp.Web.Controllers.API
     public class AccountController : ControllerBase
     {
         private readonly DataContext _dataContext;
+        private readonly IConverterHelper _converterHelper;
 
-        public AccountController(DataContext dataContext)
+        public AccountController(DataContext dataContext, IConverterHelper converterHelper)
         {
             _dataContext = dataContext;
+            _converterHelper = converterHelper;
         }
 
         [HttpPost]
@@ -82,7 +85,7 @@ namespace GenericApp.Web.Controllers.API
                 return BadRequest("No hay Usuarios.");
             }
 
-            return Ok(usuarios);
+            return Ok(_converterHelper.ToUsuarioAppResponse(usuarios));
         }
     }
 }

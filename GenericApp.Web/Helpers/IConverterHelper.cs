@@ -27,5 +27,9 @@ namespace GenericApp.Web.Helpers
         ProductResponse ToProductResponse(ProductEntity productEntity);
 
         List<ProductResponse> ToProductResponse(List<ProductEntity> productEntities);
+
+        UsuarioAppResponse ToUsuarioAppResponse(SubContratistasUsrWeb subContratistasUsrWeb);
+
+        List<UsuarioAppResponse> ToUsuarioAppResponse(List<SubContratistasUsrWeb> subContratistasUsrWeb);
     }
 }

@@ -8,6 +8,7 @@ using Prism.Navigation;
 using Xamarin.Essentials;
 using GenericApp.Common.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace GenericApp.Prism.ViewModels
 {
@@ -30,6 +31,7 @@ namespace GenericApp.Prism.ViewModels
             _apiService = apiService;
             Title = "Login";
             IsEnabled = true;
+            LoadUsers();
             //Email = "AVASILE";
             //Password = "AVA123";
         }
@@ -60,6 +62,8 @@ namespace GenericApp.Prism.ViewModels
             set => SetProperty(ref _password, value);
         }
 
+        public List<UsuarioAppResponse> MyUsers { get; set; }
+
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -70,7 +74,27 @@ namespace GenericApp.Prism.ViewModels
             }
         }
 
+        public async void LoadUsers()
+        {
+            var controller = string.Format("/Account/GetUsuarios");
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var response = await _apiService.GetUsuarios(
+                url,
+                "api",
+                controller);
+                if (!response.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await App.Current.MainPage.DisplayAlert("Error", "Problema para recuperar datos.", "Aceptar");
+                return;
+            }
+            MyUsers = (List<UsuarioAppResponse>)response.Result;
 
+            var a = 1; 
+
+           
+        }
 
         private async void LoginAsync()
         {
