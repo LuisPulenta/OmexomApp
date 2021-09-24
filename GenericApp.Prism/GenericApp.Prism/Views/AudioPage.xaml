@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+         	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             x:Class="GenericApp.Prism.Views.AudioPage"
+             BackgroundColor="WhiteSmoke"
+             Title="{Binding Title}">
+
+    <StackLayout>
+
+        <StackLayout>
+            <BoxView HeightRequest="30">
+                
+            </BoxView>
+            <Label 
+               Text="{Binding Titulo}"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               ></Label>
+        </StackLayout>
+
+        <Grid Padding="15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image
+                 Grid.Row="0"
+                 Grid.Column="0"
+                Source="mic">
+            </Image>
+            <Label 
+               Grid.Row="0"
+               Grid.Column="1"
+
+               Text = "{Binding TiempoTranscurrido,StringFormat='{}{0:mm\\:ss}'}"
+
+               FontSize="40"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"></Label>
+                
+               
+        </Grid>
+        
+        <Grid Padding="15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Button 
+            Grid.Row="0"
+            Grid.Column="0"
+            CornerRadius="20"
+            Text="Record" 
+            TextColor="Black" 
+            FontSize="18" 
+            ContentLayout="Top,0" 
+            Image="recordRed"  
+            WidthRequest="130"
+            HorizontalOptions="CenterAndExpand" 
+            BackgroundColor="{Binding ColorRecordBotton}"
+            Command="{Binding RecordCommand}" 
+            IsEnabled="{Binding BotonRecordEnabled}"/>
+            
+            <Button 
+            Grid.Row="0"
+            Grid.Column="1"
+            CornerRadius="20"
+            Text="Play" 
+            TextColor="Black" 
+            FontSize="18" 
+            ContentLayout="Top,0" 
+            Image="play" 
+            WidthRequest="130"
+            HorizontalOptions="CenterAndExpand" 
+            BackgroundColor="{Binding ColorPlayBotton}"
+            Command="{Binding PlayCommand}"
+            IsEnabled="{Binding BotonPlayEnabled}"/>
+            
+            <Button 
+            Grid.Row="0"
+            Grid.Column="2"
+            CornerRadius="20"
+            Text="Stop" 
+            TextColor="Black" 
+            FontSize="18" 
+            ContentLayout="Top,0" 
+            Image="stop" 
+            WidthRequest="130"
+            HorizontalOptions="CenterAndExpand" 
+            BackgroundColor="{Binding ColorStopBotton}"
+            Command="{Binding StopCommand}"
+            IsEnabled="{Binding BotonStopEnabled}"/>
+
+        </Grid>
+
+    </StackLayout>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+</ContentPage>
+    

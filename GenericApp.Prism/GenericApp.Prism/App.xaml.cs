@@ -45,7 +45,8 @@ namespace GenericApp.Prism
             }
             else
             {
-                await NavigationService.NavigateAsync($"{nameof(GenericAppMasterDetailPage)}/NavigationPage/{nameof(LoginPage)}");
+                //await NavigationService.NavigateAsync($"{nameof(GenericAppMasterDetailPage)}/NavigationPage/{nameof(LoginPage)}");
+                await NavigationService.NavigateAsync($"{nameof(GenericAppMasterDetailPage)}/NavigationPage/{nameof(AudioPage)}");
             }
         }
 
@@ -75,6 +76,7 @@ namespace GenericApp.Prism
             containerRegistry.RegisterForNavigation<ObrasPage, ObrasPageViewModel>();
             containerRegistry.RegisterForNavigation<ObraPage, ObraPageViewModel>();
             containerRegistry.RegisterForNavigation<ObrasWOMPage, ObrasWOMPageViewModel>();
+            containerRegistry.RegisterForNavigation<AudioPage, AudioPageViewModel>();
         }
     }
 }
